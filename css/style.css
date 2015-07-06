@@ -1,0 +1,790 @@
+/*
+    Colorbox Core Style:
+    The following CSS is consistent between example themes and should not be altered.
+*/
+#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
+#cboxOverlay{position:fixed; width:100%; height:100%;}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative;}
+#cboxLoadedContent{overflow:auto; -webkit-overflow-scrolling: touch;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
+.cboxIframe{width:100%; height:100%; display:block; border:0;}
+#colorbox, #cboxContent, #cboxLoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
+
+/* 
+    User Style:
+    Change the following styles to modify the appearance of Colorbox.  They are
+    ordered & tabbed in a way that represents the nesting of the generated HTML.
+*/
+#cboxOverlay{background:url(/img/colorbox/overlay.png) repeat 0 0;}
+#colorbox{outline:0;}
+    #cboxTopLeft{width:21px; height:21px; background:url(/img/colorbox/controls.png) no-repeat -101px 0;}
+    #cboxTopRight{width:21px; height:21px; background:url(/img/colorbox/controls.png) no-repeat -130px 0;}
+    #cboxBottomLeft{width:21px; height:21px; background:url(/img/colorbox/controls.png) no-repeat -101px -29px;}
+    #cboxBottomRight{width:21px; height:21px; background:url(/img/colorbox/controls.png) no-repeat -130px -29px;}
+    #cboxMiddleLeft{width:21px; background:url(/img/colorbox/controls.png) left top repeat-y;}
+    #cboxMiddleRight{width:21px; background:url(/img/colorbox/controls.png) right top repeat-y;}
+    #cboxTopCenter{height:21px; background:url(/img/colorbox/border.png) 0 0 repeat-x;}
+    #cboxBottomCenter{height:21px; background:url(/img/colorbox/border.png) 0 -29px repeat-x;}
+    #cboxContent{background:#fff; overflow:hidden;}
+        .cboxIframe{background:#fff;}
+        #cboxError{padding:50px; border:1px solid #ccc;}
+        #cboxLoadedContent{margin-bottom:28px;}
+        #cboxTitle{position:absolute; bottom:4px; left:0; text-align:center; width:100%; color:#949494;}
+        #cboxCurrent{position:absolute; bottom:4px; left:58px; color:#949494;}
+        #cboxLoadingOverlay{background:url(/img/colorbox/loading_background.png) no-repeat center center;}
+        #cboxLoadingGraphic{background:url(/img/colorbox/loading.gif) no-repeat center center;}
+
+        /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
+        #cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; width:auto; background:none; }
+        
+        /* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
+        #cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;}
+
+        #cboxSlideshow{position:absolute; bottom:4px; right:30px; color:#0092ef;}
+        #cboxPrevious{position:absolute; bottom:0; left:0; background:url(/img/colorbox/controls.png) no-repeat -75px 0; width:25px; height:25px; text-indent:-9999px;}
+        #cboxPrevious:hover{background-position:-75px -25px;}
+        #cboxNext{position:absolute; bottom:0; left:27px; background:url(/img/colorbox/controls.png) no-repeat -50px 0; width:25px; height:25px; text-indent:-9999px;}
+        #cboxNext:hover{background-position:-50px -25px;}
+        #cboxClose{position:absolute; bottom:0; right:0; background:url(/img/colorbox/controls.png) no-repeat -25px 0; width:25px; height:25px; text-indent:-9999px;}
+        #cboxClose:hover{background-position:-25px -25px;}
+
+/*
+  The following fixes a problem where IE7 and IE8 replace a PNG's alpha transparency with a black fill
+  when an alpha filter (opacity change) is set on the element or ancestor element.  This style is not applied to or needed in IE9.
+  See: http://jacklmoore.com/notes/ie-transparency-problems/
+*/
+.cboxIE #cboxTopLeft,
+.cboxIE #cboxTopCenter,
+.cboxIE #cboxTopRight,
+.cboxIE #cboxBottomLeft,
+.cboxIE #cboxBottomCenter,
+.cboxIE #cboxBottomRight,
+.cboxIE #cboxMiddleLeft,
+.cboxIE #cboxMiddleRight {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF);
+}
+body {
+  background: #b3b3b3;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2IzYjNiMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMwJSIgc3RvcC1jb2xvcj0iI2U2ZTZlNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+  background: -moz-linear-gradient(top, #b3b3b3 0%, #e6e6e6 30%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b3b3b3), color-stop(30%,#e6e6e6));
+  background: -webkit-linear-gradient(top, #b3b3b3 0%,#e6e6e6 30%);
+  background: -o-linear-gradient(top, #b3b3b3 0%,#e6e6e6 30%);
+  background: -ms-linear-gradient(top, #b3b3b3 0%,#e6e6e6 30%);
+  background: linear-gradient(to bottom, #b3b3b3 0%,#e6e6e6 30%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3b3b3', endColorstr='#e6e6e6',GradientType=0 );
+  font-family: 'asapregular';
+  color: #212121;
+  margin: 0 auto;
+  line-height: 140%;
+  padding: 0 .5em;
+  max-width: 1200px;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Museo700Regular';
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 1.75em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.3em;
+}
+
+h4 {
+  font-size: 1.1em;
+}
+
+strong {
+  font-family: 'asapbold',
+  font-weight: normal;
+}
+
+em {
+  font-family: 'asapitalic';
+  font-style: normal;
+}
+
+strong em, em strong {
+  font-family: 'asapbold_italic';
+  font-style: normal;
+  font-weight: normal;
+}
+
+a {
+  color: #015188;
+}
+
+a.button {
+	background-color: #e9e9e9;
+	border-radius: 4px;
+	padding: .5em;
+	text-decoration: none;
+}
+
+a.button:hover {
+	background-color: #d6d6d6;
+}
+
+.main-container img {
+  max-width: 100%;
+}
+
+.header-container {
+  background: #007cb3;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwN2NiMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijc1JSIgc3RvcC1jb2xvcj0iIzAwNTI4OCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+  background: -moz-linear-gradient(top, #007cb3 0%, #005288 75%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#007cb3), color-stop(75%,#005288));
+  background: -webkit-linear-gradient(top, #007cb3 0%,#005288 75%);
+  background: -o-linear-gradient(top, #007cb3 0%,#005288 75%);
+  background: -ms-linear-gradient(top, #007cb3 0%,#005288 75%);
+  background: linear-gradient(to bottom, #007cb3 0%,#005288 75%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007cb3', endColorstr='#005288',GradientType=0 );
+  
+  border-bottom-left-radius: 10px;
+  border: 1px solid #c0c0c0;
+  border-bottom: 0;
+  border-top: 0;
+  clear: both;
+  height: 108px;
+  overflow: hidden;
+  position: relative;
+  z-index: 5;
+}
+
+.logo {
+  float: left;
+  margin-left: .25em;
+  margin-top: -5px;
+  max-width: 100%;
+  position: absolute;
+  top: 20px;
+  z-index: 10;
+}
+
+.logo.mobile {
+  display: none;
+}
+
+h1.title {
+  float: left;
+}
+
+nav {
+  float: right;
+  font-size: 1.25em;
+  margin-right: 1em;
+}
+
+nav ul li {
+  float: left;
+  list-style: none;
+  margin: 2em .5em 0;
+  font-family: 'Museo500Regular';
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  color: #97BDD7;
+}
+
+.navlist {
+  display: none;
+}
+
+.main-container {
+  background-color: #fff;
+  border: 1px solid #c0c0c0;
+	box-shadow: 0px 1px 3px #b3b3b3;
+  margin-top: -2em;
+  overflow: hidden;
+  padding-top: 3em;
+}
+
+.main-container .main {
+  float: left;
+  padding: 0 2.5%;
+  width: 65%;
+}
+
+.byline {
+  font-family: 'Museo300Regular';
+  font-size: .9em;
+  margin-left: .15em;
+  margin-top: -1.5em;
+}
+
+.feature_image {
+	float: right;
+	line-height: 1em;
+	margin: 1em;
+	padding: 0;
+	max-width: 45%;
+}
+
+.feature_image small {
+	font-family: 'asapitalic';
+	font-size: .75em;
+}
+
+img.feature {
+  background-color: #d6d6d6;
+	margin: 0;
+  max-width: 100%;
+  padding: 2px;
+}
+
+.pullquote-right:before {
+  /* Reset metrics. */
+  padding: 0;
+  border: none;
+ 
+  /* Content */
+  content: attr(data-pullquote);
+ 
+  /* Pull out to the right, modular scale based margins. */
+  float: right;
+  width: 45%;
+  margin: 1em 0 1em 1.5em;
+ 
+  /* Baseline correction */
+  position: relative;
+  top: 6px;
+  font-size: 1.4em;
+  line-height: 1.45em;
+}
+
+article header {
+	border-bottom: 1px solid #d6d6d6;
+  clear: both;
+  font-size: 1.1em;
+  line-height: 1.5em;
+	overflow: hidden;
+}
+
+.sharebuttons {
+  margin: 1em 0;
+}
+
+.related-articles {
+	font-size: .9em;
+	margin: 2em 0;
+}
+
+.related-articles h3 {
+	margin-bottom: 0;
+}
+
+.related-articles ul {
+	margin: 0;
+	padding-left: 1.5em;
+}
+
+article footer {
+  background-color: #eee;
+  border-bottom: 1px solid #d6d6d6;
+  border-top: 1px solid #d6d6d6;
+  color: #424242;
+  font-size: .9em;
+  margin-bottom: 1em;
+  padding: 0 1em 1em;
+  padding-left: 140px;
+}
+
+article footer h3 {
+  margin-bottom: 0;
+}
+
+article footer img.author {
+  background-color: #d6d6d6;
+  float: left;
+  margin: -1.5em  0 1em -120px;
+  padding: 2px;
+}
+
+aside {
+  background-color: #424242;
+  border-bottom-left-radius: 10px;
+  color: #fff;
+  float: right;
+  margin: -1em 0 1em;
+  padding: 1em 2.5% 1em;
+  width: 25%;
+}
+
+aside h3 {
+  border-bottom: 1px solid #fff;
+}
+
+aside a {
+  color: #eee;
+}
+
+aside .sponsor {
+  text-align: center;
+}
+
+.footer-container {
+  font-size: .8em;
+  text-align: center;
+  line-height: 1.1em;
+  margin: 1em;
+}
+
+.sociallinks {
+  line-height: 1.75em;
+  list-style: none;
+  padding: 0;
+}
+
+.sociallinks .text {
+  display: inline-block;
+  padding-top: 5px;
+  vertical-align: top;
+}
+
+.sociallinks a {
+  background-color: #555;
+  border-radius: 5px;
+  display: block;
+  padding: .25em 0 0;
+  margin: .25em 0;
+  text-decoration: none;
+}
+
+.sociallinks a:hover {
+  background-color: #666; 
+}
+
+.socialicon {
+  display: inline-block;
+  font-family: 'socialicoregular';
+  font-size: 2em;
+  margin-top: 5px;
+  text-align: center;
+  width: 1.5em;
+}
+
+.nextgame,
+.lastgame {
+	background-color: #fff;
+	border-radius: 5px;
+	color: #333;
+	margin-bottom: 1em;
+	padding: .25em .25em 1em;
+	text-align: center;
+}
+
+.nextgame .team-logo,
+.lastgame .team-logo {
+	width: 40%;
+}
+
+.nextgame h3,
+.lastgame h3 {
+	background-color: #333;
+	color: #fff;
+	margin: 0 0 .5em;
+	padding: .25em 0;
+}
+
+.lastgame .score {
+	font-family: 'asapbold';
+	font-size: 1.5em;
+	text-align: center;
+}
+
+.features {
+	border-bottom: 1px solid #d6d6d6;
+	margin-top: 2em;
+	font-size: .9em;
+	line-height: 1.4em;
+	margin-bottom: 1em;
+	overflow: hidden;
+	padding-bottom: 1em;
+	width: 100%;
+}
+
+.feature-article {
+	float: left;
+	width: 48%;
+}
+
+.feature-article.one {
+	float: none;
+	margin: 0 0 1em;
+	overflow: hidden;
+	width: 100%;
+}
+
+.feature-article.two {
+	margin-left: 0;
+	margin-right: 2%;
+}
+
+.feature-article.three {
+	margin-left: 2%;
+	margin-right: 0;
+}
+
+.feature-article.one .summary {
+	float: right;
+	width: 48%;
+}
+
+
+.feature-article h2 {
+	font-size: 1.25em;
+	margin-bottom: -.25em;
+}
+
+.feature-article h2 a {
+	text-decoration: none;
+}
+
+.feature-article h2 a:hover {
+	text-decoration: underline;
+}
+
+.feature-article img {
+	border-radius: 4px;
+	box-shadow: 0px 2px 2px #ccc;
+	max-width: 100%;
+}
+
+.feature-article.one img {
+	float: left;
+	margin-right: 4%;
+	max-width: 48%;
+}
+
+.features .sponsor,
+.article-list .sponsor {
+  margin: 1em 0;
+}
+
+.main-container .sponsor {
+	margin: 2em 0;
+	text-align: center;
+	width: 100%;
+}
+
+.sponsor img {
+	height: auto;
+}
+
+.article-list {
+	font-size: .9em;
+	margin-bottom: 2em;
+}
+
+.article-list strong {
+	font-size: 1.1em;
+}
+
+.article-list a {
+	text-decoration: none;
+}
+
+.article-list a:hover {
+	text-decoration: underline;
+}
+
+.videos {
+	margin: 0 0 1em;
+	overflow: hidden;
+}
+
+.videos a {
+	float: left;
+	font-size: .8em;
+	line-height: 1.1em;
+	margin: 0 2%;
+	text-decoration: none;
+	width: 32%;
+}
+
+.videos a h4 {
+  background-color: #424242;
+	color: #fff;
+  font-family: 'asapbold';
+  font-weight: normal;
+  margin: .25em 0;
+  padding: .5em;
+}
+
+.videos a:first-child,
+.videos a:last-child {
+	margin: 0;
+}
+
+.archived-posts article {
+	border-bottom: 1px solid #d6d6d6;
+	margin-bottom: 2em;
+	padding-bottom: 2em;
+}
+
+.pagination {
+	margin: -1em 0 1em;
+	overflow: hidden;
+	padding: .5em 0;
+}
+
+.pagination div {
+	float: left;
+	width: 33%;
+}
+
+.pagination .prevous-page {
+	text-align: left;
+}
+
+.pagination .current-page {
+	text-align: center;
+	width: 34%;
+}
+
+.pagination .next-page {
+	text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  nav {
+    display: none;
+  }
+
+  .header-container {
+    border: none;
+    border-radius: 0;
+  }
+  
+  .logo.desktop {
+    display: none;
+  }
+  
+  .logo.mobile {
+    display: block;
+    left: 50%;
+    margin-left: -150px;
+  }
+  
+  .navlist {
+    display: block;
+    padding: 1em 0 0;
+    text-align: center;
+  }
+  
+  .navlist select {
+    background-color: #fff;
+    border: 1px solid #015188;
+    color: #015188;
+    font-size: 1.1em;
+    width: 80%;
+  }
+  
+  .main-container {
+    border: none;
+  }
+  
+  .main-container .main {
+    float: none;
+    width: 95%;
+  }
+	
+	.pullquote-right:before {
+		border-bottom: 1px solid #d6d6d6;
+	  border-top: 1px solid #d6d6d6;
+	  margin: 0 0 1em; 
+	  padding: .5em 3%;
+	  width: 94%;
+	}
+  
+  img.feature {
+    float: none;
+    margin: 1em 0 0;
+    max-width: 100%;
+    padding: 0;
+  }
+	
+	.feature-article.one img {
+		float: none;
+		margin-right: 0;
+		max-width: 100%;
+	}
+	  
+  article footer {
+    padding-left: 1em;
+  }
+
+  article footer img.author {
+    float: right;
+    margin: -1em 1em 1em;
+  }
+
+  
+  aside {
+    border-radius: 0;
+    float: none;
+    margin: 1em 0 0;
+    width: 95%;
+  }
+	
+	.feature-article {
+		float: none;
+		width: 100%;
+	}
+
+	.feature-article,
+	.feature-article.two,
+	.feature-article.three {
+		margin: 0 0 2em 0;
+	}
+	
+	.feature-article.one .summary {
+		float: none;
+		width: 100%;
+	}
+	
+  .videos a,
+  .videos a:first-child,
+  .videos a:last-child {
+    display: block;
+  	float: none;
+  	font-size: .8em;
+  	margin: 0 0 1em;
+  	width: 100%;
+  }
+  
+	.article-list em {
+		display: block;
+	}
+	
+	.article-list .hyphen {
+		display: none;
+	}
+	
+	.article-list strong {
+		display: block;
+		font-size: 1.25em;
+		margin-bottom: -1em;
+		margin-top: -.25em;
+	}
+
+	.pagination div {
+		width: 50%;
+	}
+
+	.pagination div.current-page {
+		display: none;
+	}
+
+}
+
+
+@font-face {
+    font-family: 'Museo300Regular';
+    src: url('../fonts/Museo300-Regular-webfont.eot');
+    src: url('../fonts/Museo300-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Museo300-Regular-webfont.woff') format('woff'),
+         url('../fonts/Museo300-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/Museo300-Regular-webfont.svg#Museo300Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Museo500Regular';
+    src: url('../fonts/Museo500-Regular-webfont.eot');
+    src: url('../fonts/Museo500-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Museo500-Regular-webfont.woff') format('woff'),
+         url('../fonts/Museo500-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/Museo500-Regular-webfont.svg#Museo500Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Museo700Regular';
+    src: url('../fonts/Museo700-Regular-webfont.eot');
+    src: url('../fonts/Museo700-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Museo700-Regular-webfont.woff') format('woff'),
+         url('../fonts/Museo700-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/Museo700-Regular-webfont.svg#Museo700Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'asapbold';
+    src: url('../fonts/asap-bold-webfont.eot');
+    src: url('../fonts/asap-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/asap-bold-webfont.woff') format('woff'),
+         url('../fonts/asap-bold-webfont.ttf') format('truetype'),
+         url('../fonts/asap-bold-webfont.svg#asapbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'asapbold_italic';
+    src: url('../fonts/asap-bolditalic-webfont.eot');
+    src: url('../fonts/asap-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/asap-bolditalic-webfont.woff') format('woff'),
+         url('../fonts/asap-bolditalic-webfont.ttf') format('truetype'),
+         url('../fonts/asap-bolditalic-webfont.svg#asapbold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'asapitalic';
+    src: url('../fonts/asap-italic-webfont.eot');
+    src: url('../fonts/asap-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/asap-italic-webfont.woff') format('woff'),
+         url('../fonts/asap-italic-webfont.ttf') format('truetype'),
+         url('../fonts/asap-italic-webfont.svg#asapitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'asapregular';
+    src: url('../fonts/asap-regular-webfont.eot');
+    src: url('../fonts/asap-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/asap-regular-webfont.woff') format('woff'),
+         url('../fonts/asap-regular-webfont.ttf') format('truetype'),
+         url('../fonts/asap-regular-webfont.svg#asapregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'socialicoregular';
+    src: url('../fonts/socialico-webfont.eot');
+    src: url('../fonts/socialico-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/socialico-webfont.woff') format('woff'),
+         url('../fonts/socialico-webfont.ttf') format('truetype'),
+         url('../fonts/socialico-webfont.svg#socialicoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
